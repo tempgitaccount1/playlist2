@@ -26,7 +26,7 @@ func (p *Playlist) Svc() *pb.PlaylistManagerService {
 }
 
 func (p *Playlist) Start() error {
-	lis, err := net.Listen("tcp", "localhost:8080")
+	lis, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
 		return err
 	}
@@ -35,12 +35,6 @@ func (p *Playlist) Start() error {
 	pb.RegisterPlaylistManagerService(server, p.Svc())
 	server.Serve(lis)
 	return nil
-}
-
-func (p *Playlist) NewPlaylis(ctx context.Context, r *pb.NewPlaylistRequest) (*pb.NewPlaylistReply, error) {
-	return &pb.NewPlaylistReply{
-		Message: fmt.Sprintf("new playlist %v", r.Name),
-	}, nil
 }
 
 func (p *Playlist) NewPlaylist(ctx context.Context, r *pb.NewPlaylistRequest) (*pb.NewPlaylistReply, error) {
