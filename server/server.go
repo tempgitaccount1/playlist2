@@ -22,7 +22,7 @@ func New() *Playlist {
 }
 
 func (p *Playlist) Svc() *pb.PlaylistManagerService {
-	return &pb.PlaylistManagerService{}
+	return &pb.PlaylistManagerService{ NewPlaylist: p.NewPlaylist }
 }
 
 func (p *Playlist) Start() error {
@@ -35,6 +35,12 @@ func (p *Playlist) Start() error {
 	pb.RegisterPlaylistManagerService(server, p.Svc())
 	server.Serve(lis)
 	return nil
+}
+
+func (p *Playlist) NewPlaylis(ctx context.Context, r *pb.NewPlaylistRequest) (*pb.NewPlaylistReply, error) {
+	return &pb.NewPlaylistReply{
+		Message: fmt.Sprintf("new playlist %v", r.Name),
+	}, nil
 }
 
 func (p *Playlist) NewPlaylist(ctx context.Context, r *pb.NewPlaylistRequest) (*pb.NewPlaylistReply, error) {
