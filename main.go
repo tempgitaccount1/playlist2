@@ -1,4 +1,4 @@
-package playlist
+package main
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	fmt.Println("start server!!")
 	s := server.New()
 	s.Start()
 	fmt.Println("did the thing")
